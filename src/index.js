@@ -49,7 +49,7 @@ init();
 
 const createEl = (el) => `<span class="letter">${el}</span>`;
 
-function onButtonPress(event) {
+function onButtonClick(event) {
   event.preventDefault();
   const textView = document.querySelector('.textarea');
 
@@ -58,4 +58,15 @@ function onButtonPress(event) {
     textView.insertAdjacentHTML('beforeend', letter);
   }
 }
-window.addEventListener('click', onButtonPress);
+window.addEventListener('click', onButtonClick);
+
+function onButtonPress(event) {
+  event.preventDefault();
+  const textView = document.querySelector('.textarea');
+  if (event.code) {
+    const letter = createEl(event.key);
+    textView.insertAdjacentHTML('beforeend', letter);
+  }
+}
+
+window.addEventListener('keydown', onButtonPress);
