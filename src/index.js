@@ -21,6 +21,7 @@ objCreation();
 const elements = keyboardCode.map((el, index) => {
   const button = document.createElement('button');
   button.classList.add('keyboard-key');
+  button.setAttribute('data-action', keyboard[index].code);
   button.type = 'button';
   button.textContent = keyboard[index].keyRu;
   return button;
@@ -30,15 +31,31 @@ function init() {
   const mainContainer = document.createElement('div');
   const keysContainer = document.createElement('section');
   const textarea = document.createElement('section');
+  const info = document.createElement('p');
 
   mainContainer.classList.add('container');
   keysContainer.classList.add('keyboard-container');
   textarea.classList.add('textarea');
+  info.classList.add('info');
+  info.textContent = 'Shift + Ctrl - переключение между языками';
 
   keysContainer.append(...elements);
 
-  mainContainer.append(textarea, keysContainer);
+  mainContainer.append(textarea, keysContainer, info);
   document.body.prepend(mainContainer);
 }
 
 init();
+
+const createEl = (el) => `<span class="letter">${el}</span>`;
+
+function onButtonPress(event) {
+  event.preventDefault();
+  const textView = document.querySelector('.textarea');
+
+  if (event.target.dataset.action) {
+    const letter = createEl(event.target.textContent);
+    textView.insertAdjacentHTML('beforeend', letter);
+  }
+}
+window.addEventListener('click', onButtonPress);

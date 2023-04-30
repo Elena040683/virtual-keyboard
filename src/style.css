@@ -34,7 +34,7 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  width: 85%;
+  min-width: 85%;
   min-height: 300px;
   margin: 0 auto;
   background-color: antiquewhite;
@@ -42,11 +42,11 @@ body {
 
 .textarea {
   display: block;
-  width: 65%;
-  min-height: 250px;
+  width: 60%;
+  min-height: 200px;
   margin: 0 auto;
   background-color: #fff;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
 }
 
 .keyboard-key {
@@ -60,5 +60,9 @@ body {
   color:aliceblue;
   background-color: #4c4c4c;
   cursor: pointer;
-  /* font-size: 1.01rem; */
+}
+
+.info {
+  padding: 20px;
+  text-align: center;
 }
