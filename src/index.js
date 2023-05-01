@@ -30,14 +30,14 @@ const elements = keyboardCode.map((el, index) => {
 function init() {
   const mainContainer = document.createElement('div');
   const keysContainer = document.createElement('section');
-  const textarea = document.createElement('section');
+  const textarea = document.createElement('textarea');
   const info = document.createElement('p');
 
   mainContainer.classList.add('container');
   keysContainer.classList.add('keyboard-container');
   textarea.classList.add('textarea');
   info.classList.add('info');
-  info.textContent = 'Shift + Ctrl - переключение между языками';
+  info.textContent = 'Shift - переключение между языками';
 
   keysContainer.append(...elements);
 
@@ -47,15 +47,48 @@ function init() {
 
 init();
 
-const createEl = (el) => `<span class="letter">${el}</span>`;
+const shift = document.querySelector('[data-action="ShiftRight"]');
+// const ctrl = document.querySelector('[data-action="ControlLeft"]');
+shift.addEventListener('click', (event) => {
+  if (event.target.dataset.action === 'ShiftLeft' && event.target.dataset.action === 'ControlLeft') {
+    for (let i = 0; i < keyboard.length; i += 1) {
+      const arr = document.querySelectorAll('.keyboard-key');
+      arr[i].innerHTML = keyboard[i].keyRu;
+    }
+  } else {
+    for (let j = 0; j < keyboard.length; j += 1) {
+      const arr1 = document.querySelectorAll('.keyboard-key');
+      arr1[j].innerHTML = keyboard[j].keyEn;
+    }
+  }
+});
 
 function onButtonClick(event) {
   event.preventDefault();
   const textView = document.querySelector('.textarea');
+  event.target.classList.add('active');
 
-  if (event.target.dataset.action) {
-    const letter = createEl(event.target.textContent);
+  if (event.target.dataset.action === 'Backspace' || event.target.dataset.action === 'Delete' || event.target.dataset.action === 'ShiftRight') {
+    textView.focus();
+    textView.value = textView.value.substring(0, textView.value.length - 1);
+  } else if (event.target.dataset.action === 'Enter') {
+    textView.focus();
+    textView.value += '\n';
+  } else if (event.target.dataset.action) {
+    const letter = event.target.textContent;
     textView.insertAdjacentHTML('beforeend', letter);
+  }
+
+  if (event.target.dataset.action === 'ShiftLeft' && event.target.dataset.action === 'ControlLeft') {
+    for (let i = 0; i < keyboard.length; i += 1) {
+      const arr = document.querySelectorAll('.keyboard-key');
+      arr[i].innerHTML = keyboard[i].keyRu;
+    }
+  } else {
+    for (let j = 0; j < keyboard.length; j += 1) {
+      const arr1 = document.querySelectorAll('.keyboard-key');
+      arr1[j].innerHTML = keyboard[j].keyEn;
+    }
   }
 }
 window.addEventListener('click', onButtonClick);
@@ -63,8 +96,18 @@ window.addEventListener('click', onButtonClick);
 function onButtonPress(event) {
   event.preventDefault();
   const textView = document.querySelector('.textarea');
-  if (event.code) {
-    const letter = createEl(event.key);
+  textView.focus();
+
+  document.querySelector(`.keyboard-key[data-action="${event.code}"]`).classList.add('active');
+
+  if (event.code === 'Backspace' || event.code === 'Delete' || event.code === 'ShiftRight') {
+    textView.focus();
+    textView.value = textView.value.substring(0, textView.value.length - 1);
+  } else if (event.code === 'Enter') {
+    textView.focus();
+    textView.value += '\n';
+  } else if (event.code) {
+    const letter = event.key;
     textView.insertAdjacentHTML('beforeend', letter);
   }
 }

@@ -34,7 +34,7 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  min-width: 85%;
+  width: 85%;
   min-height: 300px;
   margin: 0 auto;
   background-color: antiquewhite;
@@ -65,4 +65,8 @@ body {
 .info {
   padding: 20px;
   text-align: center;
+}
+
+.active {
+  background-color: #a8a3a3;
 }
